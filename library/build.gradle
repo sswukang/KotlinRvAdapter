@@ -29,8 +29,9 @@ dependencies {
     implementation deps.support.design
 }
 
+// clean build generatePomFileForReleasePublication releaseAndroidSourcesJar publishReleasePublicationToMavenLocal releaseAndroidJavadocs releaseAndroidJavadocsJar bintrayUpload --project-prop bintrayUser={your name} --project-prop bintrayKey={your key} --project-prop dryRun=false --exclude-task releaseAndroidJavadocs
 publish {
-    userOrg = 'sswukang'
+    userOrg = 'wukang'
     groupId = 'cn.sswukang.library'
     artifactId = 'KotlinRvAdapter'
     publishVersion = '1.1'
