@@ -41,6 +41,9 @@ buildscript {
                         'design'    : "com.android.support:design:${versions.supportLibrary}",
                         'constraint': 'com.android.support.constraint:constraint-layout:1.1.0'
                 ],
+                bintray  : [
+                        'gradlePlugin': 'com.novoda:bintray-release:0.8.1'
+                ],
                 'gson'   : 'com.google.code.gson:gson:2.8.4'
         ]
 
@@ -68,6 +71,7 @@ buildscript {
     dependencies {
         classpath deps.android.gradlePlugin
         classpath deps.kotlin.gradlePlugin
+        classpath deps.bintray.gradlePlugin
     }
 }
 
@@ -76,6 +80,11 @@ allprojects {
         google()
         jcenter()
     }
+}
+
+// 指定javadoc格式
+task javadoc(type: Javadoc) {
+    options.encoding = "GBK"
 }
 
 task clean(type: Delete) {

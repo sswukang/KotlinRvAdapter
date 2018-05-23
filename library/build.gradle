@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -26,4 +27,13 @@ dependencies {
     androidTestImplementation deps.support.test.espresso
     implementation deps.support.kotlin
     implementation deps.support.design
+}
+
+publish {
+    userOrg = 'sswukang'
+    groupId = 'cn.sswukang.library'
+    artifactId = 'KotlinRvAdapter'
+    publishVersion = '1.1'
+    desc = 'Kotlin Recycler View Common Adapter.'
+    website = 'https://github.com/sswukang/KotlinRvAdapter'
 }
