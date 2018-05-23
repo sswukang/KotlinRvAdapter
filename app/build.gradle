@@ -1,0 +1,36 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+    defaultConfig {
+        applicationId "cn.wukang.kotlinrvadapter"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode verCode
+        versionName verName
+        testInstrumentationRunner deps.support.test.instrumentationRunner
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':library')
+
+
+    testImplementation deps.test.junit
+    androidTestImplementation deps.support.test.runner
+    androidTestImplementation deps.support.test.espresso
+    implementation deps.support.kotlin
+    implementation deps.support.appcompat
+    implementation deps.support.design
+    implementation deps.support.constraint
+    implementation deps.gson
+}

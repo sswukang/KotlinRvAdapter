@@ -1,0 +1,83 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        versions = [
+                'minSdk'                : 14, // 最低版本
+                'compileSdk'            : 27, // 编译版本
+                'targetSdk'             : 27, // 目标版本
+
+                'kotlin'                : '1.2.30', // Kotlin版本
+                'androidPlugin'         : '3.1.2', // Android Gradle版本
+                'buildTools'            : '27.0.3', // 编译工具版本
+                'supportLibrary'        : '27.1.1', // Android Support包版本
+
+                'majorNumber'           : 1, // 大版本号
+                'minorNumber'           : 1, // 小版本号
+                'revisionNumberCMD'     : 'git rev-list HEAD --count', // 提交次数命令
+                'revisionDescriptionCMD': 'git describe --always', // 提交记录命令
+        ]
+
+        deps = [
+                test     : [
+                        'junit': "junit:junit:4.12"
+                ],
+                kotlin   : [
+                        'gradlePlugin': "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+                ],
+                android  : [
+                        'gradlePlugin'            : "com.android.tools.build:gradle:${versions.androidPlugin}",
+                        'gradleBintrayPlugin'     : 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3',
+                        'androidMavenGradlePlugin': 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+                ],
+                'support': [
+                        'test'      : [
+                                'runner'               : 'com.android.support.test:runner:1.0.1',
+                                'espresso'             : "com.android.support.test.espresso:espresso-core:3.0.1",
+                                'instrumentationRunner': "android.support.test.runner.AndroidJUnitRunner"
+                        ],
+                        'kotlin'    : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${versions.kotlin}",
+                        'appcompat' : "com.android.support:support-compat:${versions.supportLibrary}",
+                        'design'    : "com.android.support:design:${versions.supportLibrary}",
+                        'constraint': 'com.android.support.constraint:constraint-layout:1.1.0'
+                ],
+                'gson'   : 'com.google.code.gson:gson:2.8.4'
+        ]
+
+        // 获取 git 提交次数
+        try {
+            revisionNumber = versions.revisionNumberCMD.execute().getText().trim().toInteger()
+        } catch (Exception ignore) {
+            revisionNumber = 1
+        }
+        // 获取最后一次 git 记录码
+        try {
+            revisionDescription = versions.revisionDescriptionCMD.execute().getText().trim()
+        } catch (Exception ignore) {
+            revisionDescription = "1"
+        }
+        // 版本号
+        verCode = versions.majorNumber * 1000000 + versions.minorNumber * 10000 + revisionNumber
+        // 版本名(大版本.小版本.提交次数.提交记录码)
+        verName = versions.majorNumber + "." + versions.minorNumber + "." + revisionNumber + "." + revisionDescription
+    }
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath deps.android.gradlePlugin
+        classpath deps.kotlin.gradlePlugin
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

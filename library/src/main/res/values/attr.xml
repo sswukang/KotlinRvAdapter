@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SideBar">
+        <attr name="sideLazyRespond" format="boolean"/>
+        <attr name="sideTextColor" format="color"/>
+        <attr name="sideMaxOffset" format="dimension"/>
+        <attr name="sidePosition" format="enum">
+            <enum name="right" value="0"/>
+            <enum name="left" value="1"/>
+        </attr>
+        <attr name="sideTextAlignment" format="enum">
+            <enum name="center" value="0"/>
+            <enum name="left" value="1"/>
+            <enum name="right" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

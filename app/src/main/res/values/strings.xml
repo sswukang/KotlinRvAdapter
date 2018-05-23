@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">KotlinRvAdapter</string>
+    <string name="none">None Data</string>
+    <string name="main_single">Single</string>
+    <string name="main_multi">Multi</string>
+    <string name="main_sticky">Sticky</string>
+    <string name="main_sticky_side">Sticky &amp; Side</string>
+    <string name="main_asc">Asc</string>
+    <string name="main_desc">Desc</string>
+    <string name="main_shuffle">Shuffle</string>
+</resources>
