@@ -8,10 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter
  *
  * @author wukang
  */
-class BaseFragmentAdapter<out A : BaseActivity, F : BaseFragment<A>>
-(fm: FragmentManager, private var fragList: List<F>, private var fragTags: List<CharSequence>?) : FragmentPagerAdapter(fm) {
-    constructor(fm: FragmentManager, fragList: List<F>) : this(fm, fragList, null)
-
+class BaseFragmentAdapter<out A : BaseActivity, F : BaseFragment<A>>(fm: FragmentManager, private var fragList: List<F>,
+                                                                     private var fragTags: List<CharSequence>? = null)
+    : FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): F = fragList[position]
 
     override fun getCount(): Int = fragList.size

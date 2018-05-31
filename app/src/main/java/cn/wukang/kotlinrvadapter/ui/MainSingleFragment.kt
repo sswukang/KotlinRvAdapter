@@ -21,11 +21,11 @@ class MainSingleFragment : MainFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_main_rv
 
     override fun initView() {
-        adapter = object : SingleAdapter<Country>(R.layout.rv_single_item, CountryManager.getInstance().getCountryList()) {
+        adapter = object : SingleAdapter<Country>(R.layout.rv_single_item, CountryManager.getCountryList()) {
             override fun convert(position: Int, t: Country?, holder: BaseViewHolder) {
                 if (t != null) {
-                    holder.setText(R.id.single_item_name, t.getCountryNameCn())
-                    holder.setText(R.id.single_item_code, "+" + t.getCountryCode())
+                    holder.setText(R.id.single_item_name, t.countryNameCn)
+                    holder.setText(R.id.single_item_code, "+" + t.countryCode)
                 }
             }
 
@@ -34,7 +34,7 @@ class MainSingleFragment : MainFragment() {
                     Snackbar.make(v, t.toString(), Snackbar.LENGTH_LONG)
                             .addCallback(object : Snackbar.Callback() {
                                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                                    setToolbarContent(t.getCountryNameCn(), t.getCountryNameEn())
+                                    setToolbarContent(t.countryNameCn, t.countryNameEn)
                                 }
                             }).show()
                 }
@@ -42,32 +42,41 @@ class MainSingleFragment : MainFragment() {
         }
 
         val commonRv: RecyclerView? = findViewById(R.id.common_rv)
-        commonRv?.layoutManager = LinearLayoutManager(context)
-        commonRv?.adapter = adapter
+        with(commonRv) {
+            this?.layoutManager = LinearLayoutManager(context)
+            this?.adapter = this@MainSingleFragment.adapter
+        }
     }
 
     override fun asc() {
         // 正序
-        val data: List<Country> = CountryManager.getInstance().getCountryList().sortedBy { it.getCountryCode() }
+        val data: List<Country> = CountryManager.getCountryList().sortedBy { it.countryCode }
         // 刷新
-        adapter.setData(data)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(data)
+            notifyDataSetChanged()
+        }
     }
 
     override fun desc() {
         // 倒序
-        val data: List<Country> = CountryManager.getInstance().getCountryList().sortedByDescending { it.getCountryCode() }
+        val data: List<Country> = CountryManager.getCountryList().sortedByDescending { it.countryCode }
         // 刷新
         adapter.setData(data)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(data)
+            notifyDataSetChanged()
+        }
     }
 
     override fun shuffle() {
         // 乱序
-        val data: List<Country> = CountryManager.getInstance().getCountryList().shuffled()
+        val data: List<Country> = CountryManager.getCountryList().shuffled()
         // 刷新
-        adapter.setData(data)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(data)
+            notifyDataSetChanged()
+        }
     }
 
 }

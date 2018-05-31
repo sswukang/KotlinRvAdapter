@@ -23,10 +23,11 @@ class MainMultiFragment : MainFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_main_rv
 
     override fun initView() {
-        header = Country()
-        header.setCountryNameEn("Recycler View Multi Adapter Item.")
+        header = Country().apply {
+            countryNameEn = "Recycler View Multi Adapter Item."
+        }
 
-        val list: List<Country> = listOf(header) + CountryManager.getInstance().getCountryList()
+        val list: List<Country> = listOf(header) + CountryManager.getCountryList()
         adapter = object : MultiAdapter<Country>(list) {
             override fun getItemLayoutId(position: Int, t: Country?): Int {
                 return if (position == 0) R.layout.rv_multi_title else R.layout.rv_multi_content
@@ -35,11 +36,11 @@ class MainMultiFragment : MainFragment() {
             override fun convert(position: Int, t: Country?, holder: BaseViewHolder, @LayoutRes layoutId: Int) {
                 if (t != null) {
                     when (layoutId) {
-                        R.layout.rv_multi_title -> holder.setText(R.id.multi_title_ab, t.getCountryNameEn())
+                        R.layout.rv_multi_title -> holder.setText(R.id.multi_title_ab, t.countryNameEn)
                         R.layout.rv_multi_content -> {
-                            holder.setText(R.id.multi_content_id, t.getCountryId().toString(10))
-                            holder.setText(R.id.multi_content_name, t.getCountryNameCn())
-                            holder.setText(R.id.multi_content_code, "+" + t.getCountryCode())
+                            holder.setText(R.id.multi_content_id, t.countryId.toString(10))
+                            holder.setText(R.id.multi_content_name, t.countryNameCn)
+                            holder.setText(R.id.multi_content_code, "+" + t.countryCode)
                         }
                     }
                 }
@@ -50,7 +51,7 @@ class MainMultiFragment : MainFragment() {
                     Snackbar.make(v, t.toString(), Snackbar.LENGTH_LONG)
                             .addCallback(object : Snackbar.Callback() {
                                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                                    setToolbarContent(t.getCountryNameCn(), t.getCountryNameEn())
+                                    setToolbarContent(t.countryNameCn, t.countryNameEn)
                                 }
                             }).show()
                 }
@@ -58,35 +59,43 @@ class MainMultiFragment : MainFragment() {
         }
 
         val commonRv: RecyclerView? = findViewById(R.id.common_rv)
-        commonRv?.layoutManager = LinearLayoutManager(context)
-        commonRv?.adapter = adapter
+        with(commonRv) {
+            this?.layoutManager = LinearLayoutManager(context)
+            this?.adapter = this@MainMultiFragment.adapter
+        }
     }
 
     override fun asc() {
         // 正序
-        val data: List<Country> = CountryManager.getInstance().getCountryList()
-        val list: List<Country> = listOf(header) + data.sortedBy { it.getCountryId() }
+        val data: List<Country> = CountryManager.getCountryList()
+        val list: List<Country> = listOf(header) + data.sortedBy { it.countryId }
         // 刷新
-        adapter.setData(list)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(list)
+            notifyDataSetChanged()
+        }
     }
 
     override fun desc() {
         // 倒序
-        val data: List<Country> = CountryManager.getInstance().getCountryList()
-        val list: List<Country> = listOf(header) + data.sortedByDescending { it.getCountryId() }
+        val data: List<Country> = CountryManager.getCountryList()
+        val list: List<Country> = listOf(header) + data.sortedByDescending { it.countryId }
         // 刷新
-        adapter.setData(list)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(list)
+            notifyDataSetChanged()
+        }
     }
 
     override fun shuffle() {
         // 乱序
-        val data: List<Country> = CountryManager.getInstance().getCountryList()
+        val data: List<Country> = CountryManager.getCountryList()
         val list: List<Country> = listOf(header) + data.shuffled()
         // 刷新
-        adapter.setData(list)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(list)
+            notifyDataSetChanged()
+        }
     }
 
 }

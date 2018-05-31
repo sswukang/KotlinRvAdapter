@@ -1,14 +1,12 @@
 package cn.wukang.library.lib.side
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
-import android.os.Build
 import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -118,10 +116,7 @@ class SideBar : View {
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr){
         if (attrs != null) {
             val typedArray: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.SideBar)
             mLazyRespond = typedArray.getBoolean(R.styleable.SideBar_sideLazyRespond, false)

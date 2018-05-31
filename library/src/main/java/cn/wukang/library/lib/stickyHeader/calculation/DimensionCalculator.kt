@@ -7,7 +7,7 @@ import android.view.ViewGroup
 /**
  * Helper to calculate various view dimensions
  */
-class DimensionCalculator {
+object DimensionCalculator {
     /**
      * Populates [Rect] with margins for any view.
      *

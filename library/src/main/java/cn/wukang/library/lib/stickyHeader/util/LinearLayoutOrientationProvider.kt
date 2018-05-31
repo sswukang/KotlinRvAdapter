@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 /**
  * OrientationProvider for ReyclerViews who use a LinearLayoutManager
  */
-class LinearLayoutOrientationProvider : OrientationProvider {
+object LinearLayoutOrientationProvider : OrientationProvider {
     override fun getOrientation(recyclerView: RecyclerView): Int {
         val layoutManager: RecyclerView.LayoutManager = recyclerView.layoutManager
         throwIfNotLinearLayoutManager(layoutManager)

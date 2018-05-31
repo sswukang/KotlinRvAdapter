@@ -29,19 +29,19 @@ class MainStickySideFragment : MainFragment() {
             }
 
             override fun getHeaderId(position: Int, t: Country?): Long {
-                return t?.getCountryNameEn()?.get(0)?.toLong() ?: getItemId(position)
+                return t?.countryNameEn?.get(0)?.toLong() ?: getItemId(position)
             }
 
             override fun convertHeader(position: Int, t: Country?, holder: BaseViewHolder) {
                 if (t != null) {
-                    holder.setText(R.id.sticky_title_initials, t.getCountryNameEn()?.substring(0, 1))
+                    holder.setText(R.id.sticky_title_initials, t.countryNameEn?.substring(0, 1))
                 }
             }
 
             override fun convert(position: Int, t: Country?, holder: BaseViewHolder) {
                 if (t != null) {
-                    holder.setText(R.id.sticky_content_name, t.getCountryNameCn() + "(" + t.getCountryNameEn() + ")")
-                    holder.setText(R.id.sticky_content_code, "+" + t.getCountryCode())
+                    holder.setText(R.id.sticky_content_name, t.countryNameCn + "(" + t.countryNameEn + ")")
+                    holder.setText(R.id.sticky_content_code, "+" + t.countryCode)
                 }
             }
 
@@ -50,7 +50,7 @@ class MainStickySideFragment : MainFragment() {
                     Snackbar.make(v, t.toString(), Snackbar.LENGTH_LONG)
                             .addCallback(object : Snackbar.Callback() {
                                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                                    setToolbarContent(t.getCountryNameCn(), t.getCountryNameEn())
+                                    setToolbarContent(t.countryNameCn, t.countryNameEn)
                                 }
                             }).show()
                 }
@@ -58,75 +58,89 @@ class MainStickySideFragment : MainFragment() {
         }
 
         rvSideSticky = findViewById(R.id.rv_side_sticky)
-        rvSideSticky?.addItemDecoration(DividerItemDecoration(getCreatorActivity(), DividerItemDecoration.VERTICAL))
-        rvSideSticky?.setStickyHeaderAdapter(adapter)
-        rvSideSticky?.linkageMove(true)
+        with(rvSideSticky) {
+            this?.addItemDecoration(DividerItemDecoration(getCreatorActivity(), DividerItemDecoration.VERTICAL))
+            this?.setStickyHeaderAdapter(this@MainStickySideFragment.adapter)
+            return@with this?.linkageMove(true)
+        }
         asc()
     }
 
     override fun asc() {
         // 首字母map集合
-        val initials: Map<String, List<Country>> = CountryManager.getInstance().getInitialsMap()
+        val initials: Map<String, List<Country>> = CountryManager.getInitialsMap()
         // 组成首字母正序集合
         val keys: List<String> = initials.keys.sorted()
         var data: List<Country> = listOf()
-        keys.forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.getCountryNameEn() } }
+        keys.forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.countryNameEn } }
         // rv设置
-        rvSideSticky?.setIndexItems(keys)
-        rvSideSticky?.setOnSelectIndexItemListener(object : SideBar.OnSelectIndexItemListener {
-            override fun onSelectIndexItem(index: String) {
-                val position: Int = data.indexOfFirst { index == it.getCountryNameEn()?.take(1) }
-                if (0 <= position && position < data.size) {
-                    rvSideSticky?.moveToPosition(position)
+        with(rvSideSticky) {
+            this?.setIndexItems(keys)
+            return@with this?.setOnSelectIndexItemListener(object : SideBar.OnSelectIndexItemListener {
+                override fun onSelectIndexItem(index: String) {
+                    val position: Int = data.indexOfFirst { index == it.countryNameEn?.take(1) }
+                    if (0 <= position && position < data.size) {
+                        this@with.moveToPosition(position)
+                    }
                 }
-            }
-        })
+            })
+        }
         // 刷新
-        adapter.setData(data)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(data)
+            notifyDataSetChanged()
+        }
     }
 
     override fun desc() {
         // 首字母map集合
-        val initials: Map<String, List<Country>> = CountryManager.getInstance().getInitialsMap()
+        val initials: Map<String, List<Country>> = CountryManager.getInitialsMap()
         // 组成首字母倒序集合
         val keys: List<String> = initials.keys.sortedDescending()
         var data: List<Country> = listOf()
-        keys.forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.getCountryNameEn() } }
+        keys.forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.countryNameEn } }
         // rv设置
-        rvSideSticky?.setIndexItems(keys)
-        rvSideSticky?.setOnSelectIndexItemListener(object : SideBar.OnSelectIndexItemListener {
-            override fun onSelectIndexItem(index: String) {
-                val position: Int = data.indexOfFirst { index == it.getCountryNameEn()?.take(1) }
-                if (0 <= position && position < data.size) {
-                    rvSideSticky?.moveToPosition(position)
+        with(rvSideSticky) {
+            this?.setIndexItems(keys)
+            return@with this?.setOnSelectIndexItemListener(object : SideBar.OnSelectIndexItemListener {
+                override fun onSelectIndexItem(index: String) {
+                    val position: Int = data.indexOfFirst { index == it.countryNameEn?.take(1) }
+                    if (0 <= position && position < data.size) {
+                        this@with.moveToPosition(position)
+                    }
                 }
-            }
-        })
+            })
+        }
         // 刷新
-        adapter.setData(data)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(data)
+            notifyDataSetChanged()
+        }
     }
 
     override fun shuffle() {
         // 首字母map集合
-        val initials: Map<String, List<Country>> = CountryManager.getInstance().getInitialsMap()
+        val initials: Map<String, List<Country>> = CountryManager.getInitialsMap()
         // 组成首字母乱序集合
         val keys: List<String> = initials.keys.shuffled()
         var data: List<Country> = listOf()
-        keys.forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.getCountryNameEn() } }
+        keys.forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.countryNameEn } }
         // rv设置
-        rvSideSticky?.setIndexItems(keys)
-        rvSideSticky?.setOnSelectIndexItemListener(object : SideBar.OnSelectIndexItemListener {
-            override fun onSelectIndexItem(index: String) {
-                val position: Int = data.indexOfFirst { index == it.getCountryNameEn()?.take(1) }
-                if (0 <= position && position < data.size) {
-                    rvSideSticky?.moveToPosition(position)
+        with(rvSideSticky) {
+            this?.setIndexItems(keys)
+            return@with this?.setOnSelectIndexItemListener(object : SideBar.OnSelectIndexItemListener {
+                override fun onSelectIndexItem(index: String) {
+                    val position: Int = data.indexOfFirst { index == it.countryNameEn?.take(1) }
+                    if (0 <= position && position < data.size) {
+                        this@with.moveToPosition(position)
+                    }
                 }
-            }
-        })
+            })
+        }
         // 刷新
-        adapter.setData(data)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(data)
+            notifyDataSetChanged()
+        }
     }
 }

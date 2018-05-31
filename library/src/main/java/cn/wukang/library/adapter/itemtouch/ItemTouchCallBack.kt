@@ -27,13 +27,13 @@ class ItemTouchCallBack(private var onMoveSwipeListener: OnMoveSwipeListener) : 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         return when (recyclerView.layoutManager is GridLayoutManager) {
             true -> {  // GridLayout样式
-                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT // 拖动方向:上下左右
+                val dragFlags: Int = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT // 拖动方向:上下左右
                 val swipeFlags = 0 // 不支持侧滑
                 ItemTouchHelper.Callback.makeMovementFlags(dragFlags, swipeFlags)
             }
             false -> { // linearLayout样式
-                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN // 拖动方向:上下
-                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END // 侧滑方向:左右
+                val dragFlags: Int = ItemTouchHelper.UP or ItemTouchHelper.DOWN // 拖动方向:上下
+                val swipeFlags: Int = ItemTouchHelper.START or ItemTouchHelper.END // 侧滑方向:左右
                 ItemTouchHelper.Callback.makeMovementFlags(dragFlags, swipeFlags)
             }
         }

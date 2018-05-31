@@ -24,25 +24,25 @@ class MainStickyFragment : MainFragment() {
 
     override fun initView() {
         adapter = object : StickyHeaderAdapter<Country>(R.layout.rv_sticky_title, R.layout.rv_sticky_content,
-                CountryManager.getInstance().getCountryList()) {
+                CountryManager.getCountryList()) {
             override fun setHeaderHeight(): Int {
                 return resources.getDimensionPixelSize(R.dimen.main_sticky_header_height)
             }
 
             override fun getHeaderId(position: Int, t: Country?): Long {
-                return t?.getCountryNameEn()?.get(0)?.toLong() ?: getItemId(position)
+                return t?.countryNameEn?.get(0)?.toLong() ?: getItemId(position)
             }
 
             override fun convertHeader(position: Int, t: Country?, holder: BaseViewHolder) {
                 if (t != null) {
-                    holder.setText(R.id.sticky_title_initials, t.getCountryNameEn()?.substring(0, 1))
+                    holder.setText(R.id.sticky_title_initials, t.countryNameEn?.substring(0, 1))
                 }
             }
 
             override fun convert(position: Int, t: Country?, holder: BaseViewHolder) {
                 if (t != null) {
-                    holder.setText(R.id.sticky_content_name, t.getCountryNameCn() + "(" + t.getCountryNameEn() + ")")
-                    holder.setText(R.id.sticky_content_code, "+" + t.getCountryCode())
+                    holder.setText(R.id.sticky_content_name, t.countryNameCn + "(" + t.countryNameEn + ")")
+                    holder.setText(R.id.sticky_content_code, "+" + t.countryCode)
                 }
             }
 
@@ -51,7 +51,7 @@ class MainStickyFragment : MainFragment() {
                     Snackbar.make(v, t.toString(), Snackbar.LENGTH_LONG)
                             .addCallback(object : Snackbar.Callback() {
                                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                                    setToolbarContent(t.getCountryNameCn(), t.getCountryNameEn())
+                                    setToolbarContent(t.countryNameCn, t.countryNameEn)
                                 }
                             }).show()
                 }
@@ -59,36 +59,44 @@ class MainStickyFragment : MainFragment() {
         }
 
         val commonRv: RecyclerView? = findViewById(R.id.common_rv)
-        commonRv?.layoutManager = LinearLayoutManager(getCreatorActivity())
-        commonRv?.addItemDecoration(DividerItemDecoration(getCreatorActivity(), DividerItemDecoration.VERTICAL))
-        commonRv?.addItemDecoration(StickyRecyclerHeadersDecoration(adapter)) // 必须添加
-        commonRv?.adapter = adapter
+        with(commonRv) {
+            this?.layoutManager = LinearLayoutManager(getCreatorActivity())
+            this?.addItemDecoration(DividerItemDecoration(getCreatorActivity(), DividerItemDecoration.VERTICAL))
+            this?.addItemDecoration(StickyRecyclerHeadersDecoration(this@MainStickyFragment.adapter)) // 必须添加
+            this?.adapter = this@MainStickyFragment.adapter
+        }
     }
 
     override fun asc() {
         // 正序
-        val data: List<Country> = CountryManager.getInstance().getCountryList().sortedBy { it.getCountryNameEn() }
+        val data: List<Country> = CountryManager.getCountryList().sortedBy { it.countryNameEn }
         // 刷新
-        adapter.setData(data)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(data)
+            notifyDataSetChanged()
+        }
     }
 
     override fun desc() {
         // 倒序
-        val data: List<Country> = CountryManager.getInstance().getCountryList().sortedByDescending { it.getCountryNameEn() }
+        val data: List<Country> = CountryManager.getCountryList().sortedByDescending { it.countryNameEn }
         // 刷新
-        adapter.setData(data)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(data)
+            notifyDataSetChanged()
+        }
     }
 
     override fun shuffle() {
         // 首字母map集合
-        val initials: Map<String, List<Country>> = CountryManager.getInstance().getInitialsMap()
+        val initials: Map<String, List<Country>> = CountryManager.getInitialsMap()
         // 组成首字母乱序集合
         var data: List<Country> = listOf()
-        initials.keys.shuffled().forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.getCountryNameEn() } }
+        initials.keys.shuffled().forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.countryNameEn } }
         // 刷新
-        adapter.setData(data)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            setData(data)
+            notifyDataSetChanged()
+        }
     }
- }
+}

@@ -6,24 +6,13 @@ import cn.wukang.kotlinrvadapter.util.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.IOException
-import java.util.concurrent.atomic.AtomicReference
 
 /**
  * 城市列表管理类
  *
  * @author wukang
  */
-class CountryManager {
-    private class LazyHolder {
-        companion object {
-            val INSTANCE: AtomicReference<CountryManager> = AtomicReference(CountryManager())
-        }
-    }
-
-    companion object {
-        fun getInstance(): CountryManager = LazyHolder.INSTANCE.get()
-    }
-
+object CountryManager {
     private lateinit var countryList: List<Country>
 
     /**
@@ -48,6 +37,6 @@ class CountryManager {
      * @return 首字母map集合
      */
     fun getInitialsMap(): Map<String, List<Country>> = countryList.groupBy {
-        it.getCountryNameEn()?.take(1) ?: ""
+        return@groupBy it.countryNameEn?.take(1) ?: ""
     }
 }

@@ -11,11 +11,7 @@ import android.view.MotionEvent
  *
  * @author wukang
  */
-class NoScrollViewPager : ViewPager {
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-
+class NoScrollViewPager(context: Context, attrs: AttributeSet? = null) : ViewPager(context, attrs) {
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent): Boolean = false
 

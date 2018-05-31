@@ -7,13 +7,13 @@ buildscript {
                 'compileSdk'            : 27, // 编译版本
                 'targetSdk'             : 27, // 目标版本
 
-                'kotlin'                : '1.2.30', // Kotlin版本
+                'kotlin'                : '1.2.41', // Kotlin版本
                 'androidPlugin'         : '3.1.2', // Android Gradle版本
                 'buildTools'            : '27.0.3', // 编译工具版本
                 'supportLibrary'        : '27.1.1', // Android Support包版本
 
                 'majorNumber'           : 1, // 大版本号
-                'minorNumber'           : 1, // 小版本号
+                'minorNumber'           : 2, // 小版本号
                 'revisionNumberCMD'     : 'git rev-list HEAD --count', // 提交次数命令
                 'revisionDescriptionCMD': 'git describe --always', // 提交记录命令
         ]

@@ -13,7 +13,7 @@ import cn.wukang.library.lib.stickyHeader.util.OrientationProvider
  */
 class HeaderRenderer(private var orientationProvider: OrientationProvider, private var dimensionCalculator: DimensionCalculator) {
 
-    constructor(orientationProvider: OrientationProvider) : this(orientationProvider, DimensionCalculator())
+    constructor(orientationProvider: OrientationProvider) : this(orientationProvider, DimensionCalculator)
 
     /**
      * The following field is used as a buffer for internal calculations. Its sole purpose is to avoid

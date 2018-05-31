@@ -1,8 +1,6 @@
 package cn.wukang.library.lib.side
 
-import android.annotation.TargetApi
 import android.content.Context
-import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -52,10 +50,7 @@ class SideAndStickyHeaderRecyclerView : FrameLayout {
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         recyclerView = RecyclerView(context)
         recyclerView.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         addView(recyclerView)
@@ -72,11 +67,13 @@ class SideAndStickyHeaderRecyclerView : FrameLayout {
      * @param adapter [StickyHeaderAdapter]
      */
     fun <T> setStickyHeaderAdapter(adapter: StickyHeaderAdapter<T>) {
-        if (linearLayoutManager == null)
+        if (linearLayoutManager == null) {
             linearLayoutManager = LinearLayoutManager(context)
-        if (decoration == null)
+        }
+        if (decoration == null) {
             decoration = StickyRecyclerHeadersDecoration(adapter)
-        if (onScrollListener == null)
+        }
+        if (onScrollListener == null) {
             onScrollListener = object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
@@ -85,7 +82,7 @@ class SideAndStickyHeaderRecyclerView : FrameLayout {
                         if (isMove) {
                             isMove = false
                             //获取要置顶的项在当前屏幕的位置，movePosition是记录要置顶项在RecyclerView中的位置
-                            val n: Int = movePosition - (linearLayoutManager?.findFirstVisibleItemPosition() ?: 0)
+                            val n: Int = movePosition - (linearLayoutManager!!.findFirstVisibleItemPosition())
                             if (0 <= n && n < recyclerView.childCount) {
                                 //获取要置顶的项顶部离RecyclerView顶部的距离
                                 val top: Int = recyclerView.getChildAt(n).top - adapter.getHeaderHeight()
@@ -99,7 +96,7 @@ class SideAndStickyHeaderRecyclerView : FrameLayout {
                     }
                 }
             }
-
+        }
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.addItemDecoration(decoration)
         recyclerView.addOnScrollListener(onScrollListener)

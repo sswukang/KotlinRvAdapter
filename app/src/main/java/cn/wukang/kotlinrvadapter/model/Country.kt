@@ -7,77 +7,24 @@ import com.google.gson.annotations.SerializedName
 /**
  * 国家解析类
  *
+ * @param countryId 国家id
+ * @param countryCode 国家编码
+ * @param countryNameEn 国家英文名
+ * @param countryNameCn 国家中文名
+ * @param ab 国家英文缩写
  * @author wukang
  */
-class Country : Parcelable {
-    // 国家id
-    @SerializedName("country_id")
-    private var countryId: Int = 0
-    // 国家编码
-    @SerializedName("country_code")
-    private var countryCode: Int = 0
-    // 国家英文名
-    @SerializedName("country_name_en")
-    private var countryNameEn: String? = null
-    // 国家中文名
-    @SerializedName("country_name_cn")
-    private var countryNameCn: String? = null
-    // 国家英文缩写
-    private var ab: String? = null
+data class Country(@SerializedName("country_id") var countryId: Int,
+                   @SerializedName("country_code") var countryCode: Int,
+                   @SerializedName("country_name_en") var countryNameEn: String?,
+                   @SerializedName("country_name_cn") var countryNameCn: String?,
+                   @SerializedName("ab") var ab: String?) : Parcelable {
+    constructor() : this(0, 0, null, null, null)
 
-    fun getCountryId(): Int {
-        return countryId
-    }
-
-    fun setCountryId(countryId: Int) {
-        this.countryId = countryId
-    }
-
-    fun getCountryCode(): Int {
-        return countryCode
-    }
-
-    fun setCountryCode(countryCode: Int) {
-        this.countryCode = countryCode
-    }
-
-    fun getCountryNameEn(): String? {
-        return countryNameEn
-    }
-
-    fun setCountryNameEn(countryNameEn: String) {
-        this.countryNameEn = countryNameEn
-    }
-
-    fun getCountryNameCn(): String? {
-        return countryNameCn
-    }
-
-    fun setCountryNameCn(countryNameCn: String) {
-        this.countryNameCn = countryNameCn
-    }
-
-    fun getAb(): String? {
-        return ab
-    }
-
-    fun setAb(ab: String) {
-        this.ab = ab
-    }
-
-    override fun toString(): String = "Country(countryId=$countryId, countryCode=$countryCode, countryNameEn=$countryNameEn, countryNameCn=$countryNameCn, ab=$ab)"
-
-    constructor()
-
-    constructor(`in`: Parcel) {
-        this.countryId = `in`.readInt()
-        this.countryCode = `in`.readInt()
-        this.countryNameEn = `in`.readString()
-        this.countryNameCn = `in`.readString()
-        this.ab = `in`.readString()
-    }
+    constructor(`in`: Parcel) : this(`in`.readInt(), `in`.readInt(), `in`.readString(), `in`.readString(), `in`.readString())
 
     companion object {
+        @JvmField
         val CREATOR: Parcelable.Creator<Country> = object : Parcelable.Creator<Country> {
             override fun createFromParcel(source: Parcel): Country {
                 return Country(source)
@@ -89,9 +36,7 @@ class Country : Parcelable {
         }
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeInt(this.countryId)

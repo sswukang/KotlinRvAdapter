@@ -18,17 +18,8 @@ import java.util.*
  * @param clearColor   清除时颜色
  * @author wukang
  */
-abstract class ItemTouchAdapter<T>(@LayoutRes layoutId: Int, data: List<T>, @ColorInt private var pressedColor: Int, @ColorInt private var clearColor: Int)
+abstract class ItemTouchAdapter<T>(@LayoutRes layoutId: Int, data: List<T>, @ColorInt private var pressedColor: Int = Color.GRAY, @ColorInt private var clearColor: Int = Color.TRANSPARENT)
     : BaseAdapter<T, ItemTouchViewHolder>(layoutId, data), ItemTouchCallBack.OnMoveSwipeListener, ItemTouchViewHolder.ItemViewStateChangeListener {
-
-    /**
-     * 有默认颜色的构造函数
-     *
-     * @param layoutId adapter需要的布局资源id
-     * @param data     数据
-     */
-    constructor(@LayoutRes layoutId: Int, data: List<T>) : this(layoutId, data, Color.GRAY, Color.TRANSPARENT)
-
     /**
      * 设置item总个数（不允许设置无限轮播）
      */

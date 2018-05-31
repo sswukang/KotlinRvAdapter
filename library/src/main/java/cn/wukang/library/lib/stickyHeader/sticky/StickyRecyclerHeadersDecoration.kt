@@ -26,7 +26,7 @@ class StickyRecyclerHeadersDecoration<VH : RecyclerView.ViewHolder> private cons
     constructor (adapter: StickyRecyclerHeadersAdapter<VH>) : this(adapter, null)
 
     constructor(adapter: StickyRecyclerHeadersAdapter<VH>, visibilityAdapter: ItemVisibilityAdapter?) : this(
-            adapter, visibilityAdapter, LinearLayoutOrientationProvider(), DimensionCalculator())
+            adapter, visibilityAdapter, LinearLayoutOrientationProvider, DimensionCalculator)
 
     private constructor(adapter: StickyRecyclerHeadersAdapter<VH>, visibilityAdapter: ItemVisibilityAdapter?,
                         orientationProvider: OrientationProvider, dimensionCalculator: DimensionCalculator)

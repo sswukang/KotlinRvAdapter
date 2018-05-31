@@ -11,7 +11,9 @@ import cn.wukang.library.listener.RecyclerClickListener
  *
  * @author wukang
  */
-open class ItemTouchViewHolder(root: View, @LayoutRes layoutId: Int, clickListener: RecyclerClickListener, private var listener: ItemViewStateChangeListener)
+open class ItemTouchViewHolder internal constructor(root: View, @LayoutRes layoutId: Int,
+                                                    clickListener: RecyclerClickListener,
+                                                    private var listener: ItemViewStateChangeListener)
     : BaseViewHolder(root, layoutId, clickListener), ItemTouchCallBack.OnStateChangedListener {
     /**
      * 拖拽状态改变

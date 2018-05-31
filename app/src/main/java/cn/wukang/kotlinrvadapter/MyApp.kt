@@ -11,6 +11,6 @@ import cn.wukang.kotlinrvadapter.manager.CountryManager
 class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        CountryManager.getInstance().init(this)
+        CountryManager.init(this)
     }
 }

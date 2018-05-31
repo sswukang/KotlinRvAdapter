@@ -19,7 +19,8 @@ import cn.wukang.library.listener.RecyclerClickListener
  *
  * @author wukang
  */
-open class BaseViewHolder(root: View, @LayoutRes private var layoutId: Int, listener: RecyclerClickListener) : RecyclerView.ViewHolder(root) {
+open class BaseViewHolder internal constructor(root: View, @LayoutRes private var layoutId: Int, listener: RecyclerClickListener)
+    : RecyclerView.ViewHolder(root) {
     private val views: SparseArray<View> = SparseArray()
 
     init {
@@ -27,7 +28,7 @@ open class BaseViewHolder(root: View, @LayoutRes private var layoutId: Int, list
         itemView.setOnClickListener(object : DebouncingOnClickListener() {
             override fun doClick(v: View) = listener.onItemClick(v, layoutPosition, layoutId)
         })
-        itemView.setOnLongClickListener { v -> listener.onItemLongClick(v, layoutPosition, layoutId) }
+        itemView.setOnLongClickListener { listener.onItemLongClick(it, layoutPosition, layoutId) }
     }
 
     companion object {
@@ -114,8 +115,8 @@ open class BaseViewHolder(root: View, @LayoutRes private var layoutId: Int, list
      *
      * @param visibility One of [View.VISIBLE], [View.INVISIBLE], or [View.GONE].
      */
-    fun setVisibility(@IdRes viewId: Int, visibility: Int) {
-        getView<View>(viewId).visibility = visibility
+    fun setVisibility(@IdRes viewId: Int, visibility: Int) = getView<View>(viewId).apply {
+        this.visibility = visibility
     }
 
     /**
@@ -129,8 +130,8 @@ open class BaseViewHolder(root: View, @LayoutRes private var layoutId: Int, list
     /**
      * [TextView.setGravity] (int)}
      */
-    fun setTextGravity(@IdRes viewId: Int, gravity: Int) {
-        getView<TextView>(viewId).gravity = gravity
+    fun setTextGravity(@IdRes viewId: Int, gravity: Int) = getView<TextView>(viewId).apply {
+        this.gravity = gravity
     }
 
     /**
@@ -172,7 +173,9 @@ open class BaseViewHolder(root: View, @LayoutRes private var layoutId: Int, list
             throw IllegalArgumentException("方向设置个数必须与资源id个数一致.")
         }
 
-        getView<TextView>(viewId).setCompoundDrawables(setDrawables[0], setDrawables[1], setDrawables[2], setDrawables[3])
+        getView<TextView>(viewId).apply {
+            setCompoundDrawables(setDrawables[0], setDrawables[1], setDrawables[2], setDrawables[3])
+        }
     }
 
     /**
@@ -183,8 +186,8 @@ open class BaseViewHolder(root: View, @LayoutRes private var layoutId: Int, list
     /**
      * [TextView.setText]
      */
-    fun setText(@IdRes viewId: Int, text: CharSequence?) {
-        getView<TextView>(viewId).text = text
+    fun setText(@IdRes viewId: Int, text: CharSequence?) = getView<TextView>(viewId).apply {
+        this.text = text
     }
 
     /**
