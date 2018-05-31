@@ -23,6 +23,7 @@ android {
 
 dependencies {
     implementation project(':library')
+
     testImplementation deps.test.junit
     androidTestImplementation deps.support.test.runner
     androidTestImplementation deps.support.test.espresso
