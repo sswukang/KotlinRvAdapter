@@ -29,12 +29,14 @@ dependencies {
     implementation deps.support.design
 }
 
-// clean build generatePomFileForReleasePublication releaseAndroidSourcesJar publishReleasePublicationToMavenLocal releaseAndroidJavadocs releaseAndroidJavadocsJar bintrayUpload --project-prop bintrayUser={your name} --project-prop bintrayKey={your key} --project-prop dryRun=false --exclude-task releaseAndroidJavadocs
+// clean build generatePomFileForReleasePublication releaseAndroidSourcesJar publishReleasePublicationToMavenLocal releaseAndroidJavadocs releaseAndroidJavadocsJar bintrayUpload --project-prop bintrayUser={your name} --project-prop bintrayKey={your key} --exclude-task releaseAndroidJavadocs
 publish {
-    userOrg = 'wukang'
-    groupId = 'cn.sswukang.library'
-    artifactId = 'KotlinRvAdapter'
-    publishVersion = '1.2'
-    desc = 'Kotlin Recycler View Common Adapter.'
-    website = 'https://github.com/sswukang/KotlinRvAdapter'
+    repoName = "maven" // 仓库名
+    userOrg = 'sswukang0513' // bintray注册的用户名
+    groupId = 'cn.sswukang.library' // 引用时的第1部分groupId
+    artifactId = 'KotlinRvAdapter' // 引用时的第2部分项目名
+    publishVersion = '1.1' // compile引用时的第3部分版本号
+    desc = 'Kotlin Recycler View Common Adapter.' // 项目描述
+    website = 'https://github.com/sswukang/KotlinRvAdapter' // github 托管地址
+    dryRun = false
 }
