@@ -104,26 +104,24 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun setTopToolbarText(title: String?, subtitle: String?) {
-        topToolbar.apply {
-            this.title = title
-            this.subtitle = subtitle
-        }
+    fun setTopToolbarText(title: String?, subtitle: String?) = topToolbar.apply {
+        this.title = title
+        this.subtitle = subtitle
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                leftMenuPop.show()
-                true
-            }
-            R.id.main_pop -> {
-                rightMenuPop.show()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        android.R.id.home -> {
+            leftMenuPop.show()
+            true
         }
+        R.id.main_pop -> {
+            rightMenuPop.show()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)

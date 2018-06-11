@@ -78,5 +78,4 @@ class MainSingleFragment : MainFragment() {
             notifyDataSetChanged()
         }
     }
-
 }

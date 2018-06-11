@@ -24,13 +24,10 @@ class MainStickySideFragment : MainFragment() {
 
     override fun initView() {
         adapter = object : StickyHeaderAdapter<Country>(R.layout.rv_sticky_title, R.layout.rv_sticky_content, listOf()) {
-            override fun setHeaderHeight(): Int {
-                return resources.getDimensionPixelSize(R.dimen.main_sticky_header_height)
-            }
+            override val headerHeight: Int = resources.getDimensionPixelSize(R.dimen.main_sticky_header_height)
 
-            override fun getHeaderId(position: Int, t: Country?): Long {
-                return t?.countryNameEn?.get(0)?.toLong() ?: getItemId(position)
-            }
+            override fun getHeaderId(position: Int, t: Country?): Long = t?.countryNameEn?.get(0)?.toLong()
+                    ?: getItemId(position)
 
             override fun convertHeader(position: Int, t: Country?, holder: BaseViewHolder) {
                 if (t != null) {

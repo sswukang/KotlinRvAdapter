@@ -17,13 +17,6 @@ import cn.wukang.library.lib.stickyHeader.sticky.StickyRecyclerHeadersAdapter
  */
 abstract class StickyHeaderAdapter<T>(@LayoutRes private var headerLayoutId: Int, @LayoutRes layoutId: Int, data: List<T>)
     : SingleAdapter<T>(layoutId, data), StickyRecyclerHeadersAdapter<BaseViewHolder> {
-    // sticky header layout height;
-    private var headerHeight = 0
-
-    init {
-        headerHeight = this.setHeaderHeight()
-    }
-
     /**
      * 设置item总个数（不允许设置无限轮播）
      */
@@ -37,18 +30,9 @@ abstract class StickyHeaderAdapter<T>(@LayoutRes private var headerLayoutId: Int
     override fun onBindHeaderViewHolder(holder: BaseViewHolder, position: Int) = convertHeader(position, getDataItem(position), holder)
 
     /**
-     * 开放粘性头部高度，方便 recycler view 滚动。
-     *
-     * @return sticky header height
-     */
-    fun getHeaderHeight(): Int = headerHeight
-
-    /**
      * 设置粘性头部高度，方便sticky header定位
-     *
-     * @return sticky header height
      */
-    abstract fun setHeaderHeight(): Int
+    abstract val headerHeight: Int
 
     /**
      * 获得 header id 。如果某几个条目有相同的header，其id 需相同。

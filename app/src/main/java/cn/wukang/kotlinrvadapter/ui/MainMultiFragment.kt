@@ -29,9 +29,7 @@ class MainMultiFragment : MainFragment() {
 
         val list: List<Country> = listOf(header) + CountryManager.getCountryList()
         adapter = object : MultiAdapter<Country>(list) {
-            override fun getItemLayoutId(position: Int, t: Country?): Int {
-                return if (position == 0) R.layout.rv_multi_title else R.layout.rv_multi_content
-            }
+            override fun getItemLayoutId(position: Int, t: Country?): Int = if (position == 0) R.layout.rv_multi_title else R.layout.rv_multi_content
 
             override fun convert(position: Int, t: Country?, holder: BaseViewHolder, @LayoutRes layoutId: Int) {
                 if (t != null) {
@@ -97,5 +95,4 @@ class MainMultiFragment : MainFragment() {
             notifyDataSetChanged()
         }
     }
-
 }

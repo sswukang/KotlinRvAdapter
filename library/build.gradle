@@ -34,7 +34,7 @@ publish {
     userOrg = 'wukang'
     groupId = 'cn.sswukang.library'
     artifactId = 'KotlinRvAdapter'
-    publishVersion = '1.1'
+    publishVersion = '1.2'
     desc = 'Kotlin Recycler View Common Adapter.'
     website = 'https://github.com/sswukang/KotlinRvAdapter'
 }

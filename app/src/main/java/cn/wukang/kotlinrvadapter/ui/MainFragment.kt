@@ -14,7 +14,5 @@ abstract class MainFragment : BaseFragment<MainActivity>() {
 
     abstract fun shuffle()
 
-    protected fun setToolbarContent(title: String?, subtitle: String?) {
-        getCreatorActivity()?.setTopToolbarText(title, subtitle)
-    }
+    protected fun setToolbarContent(title: String?, subtitle: String?) = getCreatorActivity()?.setTopToolbarText(title, subtitle)
 }

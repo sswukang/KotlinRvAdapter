@@ -85,7 +85,7 @@ class SideAndStickyHeaderRecyclerView : FrameLayout {
                             val n: Int = movePosition - (linearLayoutManager!!.findFirstVisibleItemPosition())
                             if (0 <= n && n < recyclerView.childCount) {
                                 //获取要置顶的项顶部离RecyclerView顶部的距离
-                                val top: Int = recyclerView.getChildAt(n).top - adapter.getHeaderHeight()
+                                val top: Int = recyclerView.getChildAt(n).top - adapter.headerHeight
                                 //最后的移动
                                 if (isSmooth)
                                     recyclerView.smoothScrollBy(0, top)

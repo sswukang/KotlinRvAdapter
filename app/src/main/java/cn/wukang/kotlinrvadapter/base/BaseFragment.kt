@@ -45,10 +45,5 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment() {
     fun <T : View> findViewById(@IdRes id: Int): T? = root?.findViewById(id)
 
     @Suppress("UNCHECKED_CAST")
-    fun getCreatorActivity(): A? {
-        return if (activity != null)
-            activity as A
-        else
-            null
-    }
+    fun getCreatorActivity(): A? = if (activity != null) activity as A else null
 }

@@ -18,12 +18,10 @@ object CountryManager {
     /**
      * 初始化数据
      */
-    fun init(context: Context) {
-        try {
-            val json: String = Utils.getTextFromAssets(context, "countrycode.json")
-            countryList = Gson().fromJson<List<Country>>(json, object : TypeToken<List<Country>>() {}.type)
-        } catch (ignore: IOException) {
-        }
+    fun init(context: Context) = try {
+        val json: String = Utils.getTextFromAssets(context, "countrycode.json")
+        countryList = Gson().fromJson<List<Country>>(json, object : TypeToken<List<Country>>() {}.type)
+    } catch (ignore: IOException) {
     }
 
     /**

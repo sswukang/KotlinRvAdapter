@@ -28,13 +28,12 @@ class SideBar : View {
 
         private val DEFAULT_INDEX_ITEMS: Array<String> = arrayOf("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 
-        private const val POSITION_RIGHT = 0
-        private const val POSITION_LEFT = 1
-        private const val TEXT_ALIGN_CENTER = 0
-        private const val TEXT_ALIGN_LEFT = 1
-        private const val TEXT_ALIGN_RIGHT = 2
+        const val POSITION_RIGHT = 0
+        const val POSITION_LEFT = 1
+        const val TEXT_ALIGN_CENTER = 0
+        const val TEXT_ALIGN_LEFT = 1
+        const val TEXT_ALIGN_RIGHT = 2
     }
-
 
     private var mIndexItems: Array<String>
 
@@ -116,7 +115,7 @@ class SideBar : View {
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr){
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         if (attrs != null) {
             val typedArray: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.SideBar)
             mLazyRespond = typedArray.getBoolean(R.styleable.SideBar_sideLazyRespond, false)

@@ -23,16 +23,13 @@ data class Country(@SerializedName("country_id") var countryId: Int,
 
     constructor(`in`: Parcel) : this(`in`.readInt(), `in`.readInt(), `in`.readString(), `in`.readString(), `in`.readString())
 
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<Country> = object : Parcelable.Creator<Country> {
-            override fun createFromParcel(source: Parcel): Country {
-                return Country(source)
-            }
+    companion object CREATOR : Parcelable.Creator<Country> {
+        override fun createFromParcel(source: Parcel): Country {
+            return Country(source)
+        }
 
-            override fun newArray(size: Int): Array<Country> {
-                return Array(size, { Country() })
-            }
+        override fun newArray(size: Int): Array<Country> {
+            return Array(size, { Country() })
         }
     }
 
