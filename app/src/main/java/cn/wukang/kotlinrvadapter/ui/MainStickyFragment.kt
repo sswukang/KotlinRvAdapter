@@ -62,34 +62,23 @@ class MainStickyFragment : MainFragment() {
             this?.addItemDecoration(StickyRecyclerHeadersDecoration(this@MainStickyFragment.adapter)) // 必须添加
             this?.adapter = this@MainStickyFragment.adapter
         }
+
+        // 初始化排序一次
+        asc()
     }
 
-    override fun asc() {
-        // 正序
-        val data: List<Country> = CountryManager.getCountryList().sortedBy { it.countryNameEn }
-        // 刷新
-        adapter.apply {
-            setData(data)
-            notifyDataSetChanged()
-        }
-    }
+    override fun asc() = CountryManager.getInitialsMap().stickySort { it.keys.sorted() }
 
-    override fun desc() {
-        // 倒序
-        val data: List<Country> = CountryManager.getCountryList().sortedByDescending { it.countryNameEn }
-        // 刷新
-        adapter.apply {
-            setData(data)
-            notifyDataSetChanged()
-        }
-    }
+    override fun desc() = CountryManager.getInitialsMap().stickySort { it.keys.sortedDescending() }
 
-    override fun shuffle() {
-        // 首字母map集合
-        val initials: Map<String, List<Country>> = CountryManager.getInitialsMap()
-        // 组成首字母乱序集合
+    override fun shuffle() = CountryManager.getInitialsMap().stickySort { it.keys.shuffled() }
+
+    // Sticky 排序的通用方法
+    private fun Map<String, List<Country>>.stickySort(block: (Map<String, List<Country>>) -> List<String>) {
+        // 创建一个空list
         var data: List<Country> = listOf()
-        initials.keys.shuffled().forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.countryNameEn } }
+        // 根据首字母的顺序，添加对应的数据列表
+        block(this).forEach { data += this.getOrElse(it) { listOf() }.sortedBy { it.countryNameEn } }
         // 刷新
         adapter.apply {
             setData(data)

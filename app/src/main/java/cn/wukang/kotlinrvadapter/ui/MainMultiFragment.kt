@@ -10,6 +10,7 @@ import cn.wukang.kotlinrvadapter.manager.CountryManager
 import cn.wukang.kotlinrvadapter.model.Country
 import cn.wukang.library.adapter.base.BaseViewHolder
 import cn.wukang.library.adapter.multi.MultiAdapter
+import java.util.*
 
 /**
  * Multi Fragment
@@ -29,7 +30,8 @@ class MainMultiFragment : MainFragment() {
 
         val list: List<Country> = listOf(header) + CountryManager.getCountryList()
         adapter = object : MultiAdapter<Country>(list) {
-            override fun getItemLayoutId(position: Int, t: Country?): Int = if (position == 0) R.layout.rv_multi_title else R.layout.rv_multi_content
+            override fun getItemLayoutId(position: Int, t: Country?): Int =
+                    if (t?.countryId ?: 0 <= 0) R.layout.rv_multi_title else R.layout.rv_multi_content
 
             override fun convert(position: Int, t: Country?, holder: BaseViewHolder, @LayoutRes layoutId: Int) {
                 if (t != null) {
@@ -65,34 +67,39 @@ class MainMultiFragment : MainFragment() {
 
     override fun asc() {
         // 正序
-        val data: List<Country> = CountryManager.getCountryList()
-        val list: List<Country> = listOf(header) + data.sortedBy { it.countryId }
+        val data: List<Country> = CountryManager.getCountryList().sortedBy { it.countryId }.repeat(Random().nextInt(5), header)
         // 刷新
         adapter.apply {
-            setData(list)
+            setData(data)
             notifyDataSetChanged()
         }
     }
 
     override fun desc() {
         // 倒序
-        val data: List<Country> = CountryManager.getCountryList()
-        val list: List<Country> = listOf(header) + data.sortedByDescending { it.countryId }
+        val data: List<Country> = CountryManager.getCountryList().sortedByDescending { it.countryId }.repeat(Random().nextInt(5), header)
         // 刷新
         adapter.apply {
-            setData(list)
+            setData(data)
             notifyDataSetChanged()
         }
     }
 
     override fun shuffle() {
         // 乱序
-        val data: List<Country> = CountryManager.getCountryList()
-        val list: List<Country> = listOf(header) + data.shuffled()
+        val data: List<Country> = CountryManager.getCountryList().shuffled().repeat(Random().nextInt(5), header)
         // 刷新
         adapter.apply {
-            setData(list)
+            setData(data)
             notifyDataSetChanged()
         }
+    }
+
+    private fun List<Country>.repeat(times: Int, element: Country): List<Country> {
+        var data: List<Country> = this
+        for (i: Int in 0..times) {
+            data = listOf(element) + data
+        }
+        return data
     }
 }

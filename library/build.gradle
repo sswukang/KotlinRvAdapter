@@ -30,7 +30,7 @@ dependencies {
     androidTestImplementation deps.support.test.runner
     androidTestImplementation deps.support.test.espresso
     implementation deps.support.kotlin
-    implementation deps.support.design
+    implementation deps.support.recyclerview
 }
 
 // clean build generatePomFileForReleasePublication releaseAndroidJavadocs releaseAndroidJavadocsJar releaseAndroidSourcesJar publishReleasePublicationToMavenLocal bintrayUpload --exclude-task releaseAndroidJavadocs

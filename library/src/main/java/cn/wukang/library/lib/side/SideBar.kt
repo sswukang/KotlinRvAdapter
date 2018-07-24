@@ -1,12 +1,14 @@
 package cn.wukang.library.lib.side
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.os.Build
 import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -35,7 +37,7 @@ class SideBar : View {
         const val TEXT_ALIGN_RIGHT = 2
     }
 
-    private var mIndexItems: Array<String>
+    private var mIndexItems: Array<String> = DEFAULT_INDEX_ITEMS
 
     /**
      * the index in [.mIndexItems] of the current selected index item,
@@ -50,9 +52,9 @@ class SideBar : View {
      */
     private var mCurrentY: Float = (-1).toFloat()
 
-    private val mPaint: Paint
-    private var mTextColor: Int
-    private val mTextSize: Float
+    private val mPaint: Paint = Paint()
+    private var mTextColor: Int = Color.GRAY
+    private val mTextSize: Float = sp2px(DEFAULT_TEXT_SIZE)
 
     /**
      * the height of each index item
@@ -62,7 +64,7 @@ class SideBar : View {
     /**
      * offset of the current selected index item
      */
-    private var mMaxOffset: Float
+    private var mMaxOffset: Float = dp2px(DEFAULT_MAX_OFFSET)
 
     /**
      * [.mStartTouching] will be set to true when [MotionEvent.ACTION_DOWN]
@@ -88,18 +90,18 @@ class SideBar : View {
      * will not be called until the finger up.
      * if false, it will be called when the finger down, up and move.
      */
-    private var mLazyRespond: Boolean
+    private var mLazyRespond: Boolean = false
 
     /**
      * the position of the side bar, default is [.POSITION_RIGHT].
      * You can set it to [.POSITION_LEFT] for people who use phone with left hand.
      */
-    private var mSideBarPosition: Int
+    private var mSideBarPosition: Int = POSITION_RIGHT
 
     /**
      * the alignment of items, default is [.TEXT_ALIGN_CENTER].
      */
-    private var mTextAlignment: Int
+    private var mTextAlignment: Int = TEXT_ALIGN_CENTER
 
     /**
      * observe the current selected index item
@@ -116,6 +118,15 @@ class SideBar : View {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        init(attrs)
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        init(attrs)
+    }
+
+    private fun init(attrs: AttributeSet?) {
         if (attrs != null) {
             val typedArray: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.SideBar)
             mLazyRespond = typedArray.getBoolean(R.styleable.SideBar_sideLazyRespond, false)
@@ -124,18 +135,8 @@ class SideBar : View {
             mSideBarPosition = typedArray.getInt(R.styleable.SideBar_sidePosition, POSITION_RIGHT)
             mTextAlignment = typedArray.getInt(R.styleable.SideBar_sideTextAlignment, TEXT_ALIGN_CENTER)
             typedArray.recycle()
-        } else {
-            mLazyRespond = false
-            mTextColor = Color.GRAY
-            mMaxOffset = dp2px(DEFAULT_MAX_OFFSET)
-            mSideBarPosition = POSITION_RIGHT
-            mTextAlignment = TEXT_ALIGN_CENTER
         }
 
-        mTextSize = sp2px(DEFAULT_TEXT_SIZE)
-        mIndexItems = DEFAULT_INDEX_ITEMS
-
-        mPaint = Paint()
         mPaint.isAntiAlias = true
         mPaint.color = mTextColor
         mPaint.textSize = mTextSize

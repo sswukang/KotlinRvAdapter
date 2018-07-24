@@ -60,68 +60,24 @@ class MainStickySideFragment : MainFragment() {
             this?.setStickyHeaderAdapter(this@MainStickySideFragment.adapter)
             return@with this?.linkageMove(true)
         }
+
+        // 初始化排序一次
         asc()
     }
 
-    override fun asc() {
-        // 首字母map集合
-        val initials: Map<String, List<Country>> = CountryManager.getInitialsMap()
-        // 组成首字母正序集合
-        val keys: List<String> = initials.keys.sorted()
-        var data: List<Country> = listOf()
-        keys.forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.countryNameEn } }
-        // rv设置
-        with(rvSideSticky) {
-            this?.setIndexItems(keys)
-            return@with this?.setOnSelectIndexItemListener(object : SideBar.OnSelectIndexItemListener {
-                override fun onSelectIndexItem(index: String) {
-                    val position: Int = data.indexOfFirst { index == it.countryNameEn?.take(1) }
-                    if (0 <= position && position < data.size) {
-                        this@with.moveToPosition(position)
-                    }
-                }
-            })
-        }
-        // 刷新
-        adapter.apply {
-            setData(data)
-            notifyDataSetChanged()
-        }
-    }
+    override fun asc() = CountryManager.getInitialsMap().sideStickySort { it.keys.sorted() }
 
-    override fun desc() {
-        // 首字母map集合
-        val initials: Map<String, List<Country>> = CountryManager.getInitialsMap()
-        // 组成首字母倒序集合
-        val keys: List<String> = initials.keys.sortedDescending()
-        var data: List<Country> = listOf()
-        keys.forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.countryNameEn } }
-        // rv设置
-        with(rvSideSticky) {
-            this?.setIndexItems(keys)
-            return@with this?.setOnSelectIndexItemListener(object : SideBar.OnSelectIndexItemListener {
-                override fun onSelectIndexItem(index: String) {
-                    val position: Int = data.indexOfFirst { index == it.countryNameEn?.take(1) }
-                    if (0 <= position && position < data.size) {
-                        this@with.moveToPosition(position)
-                    }
-                }
-            })
-        }
-        // 刷新
-        adapter.apply {
-            setData(data)
-            notifyDataSetChanged()
-        }
-    }
+    override fun desc() = CountryManager.getInitialsMap().sideStickySort { it.keys.sortedDescending() }
 
-    override fun shuffle() {
-        // 首字母map集合
-        val initials: Map<String, List<Country>> = CountryManager.getInitialsMap()
-        // 组成首字母乱序集合
-        val keys: List<String> = initials.keys.shuffled()
+    override fun shuffle() = CountryManager.getInitialsMap().sideStickySort { it.keys.shuffled() }
+
+    // Side Sticky 排序的通用方法
+    private fun Map<String, List<Country>>.sideStickySort(block: (Map<String, List<Country>>) -> List<String>) = sideStickyOtherSet(block(this), this)
+
+    // Side Sticky 排序的其他设置
+    private fun sideStickyOtherSet(keys: List<String>, initials: Map<String, List<Country>>) {
         var data: List<Country> = listOf()
-        keys.forEach { data += initials.getOrElse(it, { listOf() }).sortedBy { it.countryNameEn } }
+        keys.forEach { data += initials.getOrElse(it) { listOf() }.sortedBy { it.countryNameEn } }
         // rv设置
         with(rvSideSticky) {
             this?.setIndexItems(keys)

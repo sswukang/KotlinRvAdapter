@@ -24,22 +24,18 @@ data class Country(@SerializedName("country_id") var countryId: Int,
     constructor(`in`: Parcel) : this(`in`.readInt(), `in`.readInt(), `in`.readString(), `in`.readString(), `in`.readString())
 
     companion object CREATOR : Parcelable.Creator<Country> {
-        override fun createFromParcel(source: Parcel): Country {
-            return Country(source)
-        }
+        override fun createFromParcel(source: Parcel): Country = Country(source)
 
-        override fun newArray(size: Int): Array<Country> {
-            return Array(size, { Country() })
-        }
+        override fun newArray(size: Int): Array<Country> = Array(size) { Country() }
     }
 
     override fun describeContents(): Int = 0
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeInt(this.countryId)
-        dest.writeInt(this.countryCode)
-        dest.writeString(this.countryNameEn)
-        dest.writeString(this.countryNameCn)
-        dest.writeString(this.ab)
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeInt(countryId)
+        writeInt(countryCode)
+        writeString(countryNameEn)
+        writeString(countryNameCn)
+        writeString(ab)
     }
 }

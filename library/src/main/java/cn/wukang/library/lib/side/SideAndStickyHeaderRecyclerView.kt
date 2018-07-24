@@ -1,6 +1,8 @@
 package cn.wukang.library.lib.side
 
+import android.annotation.TargetApi
 import android.content.Context
+import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -19,8 +21,8 @@ import cn.wukang.library.lib.stickyHeader.sticky.StickyRecyclerHeadersDecoration
  */
 class SideAndStickyHeaderRecyclerView : FrameLayout {
 
-    private var recyclerView: RecyclerView
-    private var sideBar: SideBar
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var sideBar: SideBar
     /**
      * sticky header 目前需要线性布局
      */
@@ -51,6 +53,15 @@ class SideAndStickyHeaderRecyclerView : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        init(context)
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        init(context)
+    }
+
+    private fun init(context: Context) {
         recyclerView = RecyclerView(context)
         recyclerView.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         addView(recyclerView)

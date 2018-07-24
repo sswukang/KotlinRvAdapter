@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import cn.wukang.kotlinrvadapter.R
 import cn.wukang.kotlinrvadapter.base.BaseActivity
 import cn.wukang.kotlinrvadapter.base.BaseFragmentAdapter
@@ -59,47 +61,49 @@ class MainActivity : BaseActivity() {
 
     @SuppressLint("RestrictedApi")
     private fun initLeftMenuPop() {
+        val menuBuilder: MenuBuilder = MenuBuilder(getContext()).apply {
+            setOptionalIconsVisible(true)
+            add(R.string.main_single).setIcon(R.drawable.ic_main_single)
+            add(R.string.main_multi).setIcon(R.drawable.ic_main_multi)
+            add(R.string.main_sticky).setIcon(R.drawable.ic_main_sticky)
+            add(R.string.main_sticky_side).setIcon(R.drawable.ic_main_sticky_side)
+        }
         leftMenuPop = ListPopupWindow(getContext()).apply {
             width = resources.displayMetrics.widthPixels / 2
             height = ListPopupWindow.WRAP_CONTENT
             anchorView = topToolbar
             isModal = true
-            setAdapter(MenuAdapter(MenuBuilder(getContext()).apply {
-                setOptionalIconsVisible(true)
-                add(R.string.main_single).setIcon(R.drawable.ic_main_single)
-                add(R.string.main_multi).setIcon(R.drawable.ic_main_multi)
-                add(R.string.main_sticky).setIcon(R.drawable.ic_main_sticky)
-                add(R.string.main_sticky_side).setIcon(R.drawable.ic_main_sticky_side)
-            }, layoutInflater, true))
+            setAdapter(MenuAdapter(menuBuilder, layoutInflater, true))
             setDropDownGravity(Gravity.START)
-            setOnItemClickListener({ _, _, position, _ ->
+            setOnItemClickListener { _: AdapterView<*>, _: View, position: Int, _: Long ->
                 mainViewPager.setCurrentItem(position, false)
-                leftMenuPop.dismiss()
-            })
+                dismiss()
+            }
         }
     }
 
     @SuppressLint("RestrictedApi")
     private fun initRightMenuPop() {
+        val menuBuilder: MenuBuilder = MenuBuilder(getContext()).apply {
+            setOptionalIconsVisible(true)
+            add(R.string.main_asc).setIcon(R.drawable.ic_main_asc)
+            add(R.string.main_desc).setIcon(R.drawable.ic_main_desc)
+            add(R.string.main_shuffle).setIcon(R.drawable.ic_main_shuffle)
+        }
         rightMenuPop = ListPopupWindow(getContext()).apply {
             width = resources.displayMetrics.widthPixels / 2
             height = ListPopupWindow.WRAP_CONTENT
             anchorView = topToolbar
             isModal = true
-            setAdapter(MenuAdapter(MenuBuilder(getContext()).apply {
-                setOptionalIconsVisible(true)
-                add(R.string.main_asc).setIcon(R.drawable.ic_main_asc)
-                add(R.string.main_desc).setIcon(R.drawable.ic_main_desc)
-                add(R.string.main_shuffle).setIcon(R.drawable.ic_main_shuffle)
-            }, layoutInflater, true))
+            setAdapter(MenuAdapter(menuBuilder, layoutInflater, true))
             setDropDownGravity(Gravity.END)
-            setOnItemClickListener { _, _, position, _ ->
+            setOnItemClickListener { _: AdapterView<*>, _: View, position: Int, _: Long ->
                 when (position) {
                     0 -> fragmentAdapter.getItem(mainViewPager.currentItem).asc()
                     1 -> fragmentAdapter.getItem(mainViewPager.currentItem).desc()
                     2 -> fragmentAdapter.getItem(mainViewPager.currentItem).shuffle()
                 }
-                rightMenuPop.dismiss()
+                dismiss()
             }
         }
     }
