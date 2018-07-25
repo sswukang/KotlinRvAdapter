@@ -19,18 +19,18 @@ buildscript {
         ]
 
         deps = [
-                test     : [
+                test   : [
                         'junit': "junit:junit:4.12"
                 ],
-                kotlin   : [
+                kotlin : [
                         'gradlePlugin': "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
                 ],
-                android  : [
+                android: [
                         'gradlePlugin'            : "com.android.tools.build:gradle:${versions.androidPlugin}",
                         'gradleBintrayPlugin'     : 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3',
                         'androidMavenGradlePlugin': 'com.github.dcendents:android-maven-gradle-plugin:1.5'
                 ],
-                'support': [
+                support: [
                         'test'        : [
                                 'runner'               : 'com.android.support.test:runner:1.0.1',
                                 'espresso'             : "com.android.support.test.espresso:espresso-core:3.0.1",
@@ -42,10 +42,10 @@ buildscript {
                         'recyclerview': "com.android.support:recyclerview-v7:${versions.supportLibrary}",
                         'constraint'  : 'com.android.support.constraint:constraint-layout:1.1.2'
                 ],
-                bintray  : [
+                bintray: [
                         'gradlePlugin': 'com.novoda:bintray-release:0.8.1'
                 ],
-                'gson'   : 'com.google.code.gson:gson:2.8.5'
+                'gson' : 'com.google.code.gson:gson:2.8.5'
         ]
 
         // 获取 git 提交次数
