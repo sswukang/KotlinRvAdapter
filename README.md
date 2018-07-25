@@ -7,5 +7,5 @@ Kotlin RecyclerView Adapter
 Add the dependency
 
 	dependencies {
-	        implementation 'cn.sswukang.library:KotlinRvAdapter:1.2'
+	        implementation 'cn.sswukang.library:KotlinRvAdapter:1.3'
 	}
