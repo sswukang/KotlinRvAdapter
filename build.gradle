@@ -7,13 +7,13 @@ buildscript {
                 'compileSdk'            : 27, // 编译版本
                 'targetSdk'             : 27, // 目标版本
 
-                'kotlin'                : '1.2.51', // Kotlin版本
-                'androidPlugin'         : '3.1.3', // Android Gradle版本
-                'buildTools'            : '27.0.3', // 编译工具版本
-                'supportLibrary'        : '27.1.1', // Android Support包版本
+                'kotlin'                : '1.3.11', // Kotlin版本
+                'androidPlugin'         : '3.3.0', // Android Gradle版本
+                'buildTools'            : '28.0.3', // 编译工具版本
+                'supportLibrary'        : '28.0.0', // Android Support包版本
 
                 'majorNumber'           : 1, // 大版本号
-                'minorNumber'           : 3, // 小版本号
+                'minorNumber'           : 4, // 小版本号
                 'revisionNumberCMD'     : 'git rev-list HEAD --count', // 提交次数命令
                 'revisionDescriptionCMD': 'git describe --always', // 提交记录命令
         ]
@@ -32,15 +32,15 @@ buildscript {
                 ],
                 support: [
                         'test'        : [
-                                'runner'               : 'com.android.support.test:runner:1.0.1',
-                                'espresso'             : "com.android.support.test.espresso:espresso-core:3.0.1",
+                                'runner'               : 'com.android.support.test:runner:1.0.2',
+                                'espresso'             : "com.android.support.test.espresso:espresso-core:3.0.2",
                                 'instrumentationRunner': "android.support.test.runner.AndroidJUnitRunner"
                         ],
                         'kotlin'      : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
                         'appcompat'   : "com.android.support:support-compat:${versions.supportLibrary}",
                         'design'      : "com.android.support:design:${versions.supportLibrary}",
                         'recyclerview': "com.android.support:recyclerview-v7:${versions.supportLibrary}",
-                        'constraint'  : 'com.android.support.constraint:constraint-layout:1.1.2'
+                        'constraint'  : 'com.android.support.constraint:constraint-layout:1.1.3'
                 ],
                 bintray: [
                         'gradlePlugin': 'com.novoda:bintray-release:0.8.1'

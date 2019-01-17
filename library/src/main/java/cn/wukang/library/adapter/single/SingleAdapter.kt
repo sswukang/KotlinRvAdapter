@@ -13,9 +13,9 @@ import cn.wukang.library.adapter.base.BaseViewHolder
  * @author wukang
  */
 abstract class SingleAdapter<T>(layoutId: Int, data: List<T>) : BaseAdapter<T, BaseViewHolder>(layoutId, data) {
-    override fun onItemClick(v: View, position: Int, @LayoutRes layoutId: Int) = onItemClick(v, position, getDataItem(position))
+    final override fun onItemClick(v: View, position: Int, @LayoutRes layoutId: Int) = onItemClick(v, position, getDataItem(position))
 
-    override fun onItemLongClick(v: View, position: Int, @LayoutRes layoutId: Int): Boolean = onItemLongClick(v, position, getDataItem(position))
+    final override fun onItemLongClick(v: View, position: Int, @LayoutRes layoutId: Int): Boolean = onItemLongClick(v, position, getDataItem(position))
 
     /**
      * item的单击事件

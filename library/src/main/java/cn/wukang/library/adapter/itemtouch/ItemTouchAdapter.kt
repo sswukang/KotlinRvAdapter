@@ -26,12 +26,12 @@ abstract class ItemTouchAdapter<T>(@LayoutRes layoutId: Int, data: List<T>, @Col
     final override fun getItemCount(): Int = super.getItemCount()
 
     // 创建hold
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemTouchViewHolder = ItemTouchViewHolder.get(
+    final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemTouchViewHolder = ItemTouchViewHolder.get(
             LayoutInflater.from(parent.context).inflate(viewType, parent, false), viewType, this, this)
 
-    override fun onItemClick(v: View, position: Int, @LayoutRes layoutId: Int) = onItemClick(v, position, getDataItem(position))
+    final override fun onItemClick(v: View, position: Int, @LayoutRes layoutId: Int) = onItemClick(v, position, getDataItem(position))
 
-    override fun onItemLongClick(v: View, position: Int, @LayoutRes layoutId: Int): Boolean = onItemLongClick(v, position, getDataItem(position))
+    final override fun onItemLongClick(v: View, position: Int, @LayoutRes layoutId: Int): Boolean = onItemLongClick(v, position, getDataItem(position))
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         //交换数据源位置

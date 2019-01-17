@@ -21,11 +21,11 @@ abstract class MultiAdapter<T>(data: List<T>) : BaseAdapter<T, BaseViewHolder>(-
     @LayoutRes
     override fun getItemViewType(position: Int): Int = getItemLayoutId(position, getDataItem(position))
 
-    override fun convert(position: Int, t: T?, holder: BaseViewHolder) = convert(position, t, holder, holder.getLayoutId())
+    final override fun convert(position: Int, t: T?, holder: BaseViewHolder) = convert(position, t, holder, holder.getLayoutId())
 
-    override fun onItemClick(v: View, position: Int, @LayoutRes layoutId: Int) = onItemClick(v, position, getDataItem(position), layoutId)
+    final override fun onItemClick(v: View, position: Int, @LayoutRes layoutId: Int) = onItemClick(v, position, getDataItem(position), layoutId)
 
-    override fun onItemLongClick(v: View, position: Int, @LayoutRes layoutId: Int): Boolean = onItemLongClick(v, position, getDataItem(position), layoutId)
+    final override fun onItemLongClick(v: View, position: Int, @LayoutRes layoutId: Int): Boolean = onItemLongClick(v, position, getDataItem(position), layoutId)
 
     /**
      * 实现该抽象方法，得到单个item的layout id。

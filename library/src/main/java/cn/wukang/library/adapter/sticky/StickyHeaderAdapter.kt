@@ -22,12 +22,12 @@ abstract class StickyHeaderAdapter<T>(@LayoutRes private var headerLayoutId: Int
      */
     final override fun getItemCount(): Int = super.getItemCount()
 
-    override fun getHeaderId(position: Int): Long = getHeaderId(position, getDataItem(position))
+    final override fun getHeaderId(position: Int): Long = getHeaderId(position, getDataItem(position))
 
-    override fun onCreateHeaderViewHolder(parent: ViewGroup): BaseViewHolder = BaseViewHolder.get(
+    final override fun onCreateHeaderViewHolder(parent: ViewGroup): BaseViewHolder = BaseViewHolder.get(
             LayoutInflater.from(parent.context).inflate(headerLayoutId, parent, false), headerLayoutId, this)
 
-    override fun onBindHeaderViewHolder(holder: BaseViewHolder, position: Int) = convertHeader(position, getDataItem(position), holder)
+    final override fun onBindHeaderViewHolder(holder: BaseViewHolder, position: Int) = convertHeader(position, getDataItem(position), holder)
 
     /**
      * 设置粘性头部高度，方便sticky header定位
